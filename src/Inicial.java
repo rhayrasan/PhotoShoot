@@ -5,7 +5,13 @@
 
 
 import java.awt.Color;
+import java.awt.Image;
+import static java.awt.image.ImageObserver.WIDTH;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,6 +19,14 @@ import javax.swing.ImageIcon;
  */
 public class Inicial extends javax.swing.JFrame {
 
+    
+    
+     public static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+     public static Usuario Uaux;
+    
+     Image aux = null;
+     ImageIcon auxicon = null;
+     
     /**
      * Creates new form Inicial
      */
@@ -110,6 +124,49 @@ public class Inicial extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    private void CadastrarActionPerformed(java.awt.event.ActionEvent evt) { 
+        JOptionPane.showMessageDialog(rootPane, head, "Escolha uma foto para seu Avatar", WIDTH);
+        JFileChooser foto = new JFileChooser();
+        
+                    if (foto.showOpenDialog(null)== JFileChooser.APPROVE_OPTION){
+                        JOptionPane.showMessageDialog(null, "mas que beleza einh?!?!");
+                        //aux = Image.class.cast(foto.getSelectedFile());
+                        
+                        try{
+                         aux = ImageIO.read(foto.getSelectedFile());
+                         auxicon = new ImageIcon(aux);                         
+                         Inicial.Uaux.setAvatar(aux);
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }                        
+                    }                    
+        Usuario u = new Usuario(fieldlogin.getText(), fieldsenha.getText(), aux , null);
+        
+        usuarios.add(u);
+        
+        JOptionPane.showMessageDialog(rootPane, head, "Cadastro Concluído, Bem Vindo ao PhotoShoot", WIDTH);
+    }                                         
+
+    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        for(Usuario u : usuarios){
+            if(u.getNomeUsuario().equalsIgnoreCase(fieldlogin.getText())&& u.getSenha().equalsIgnoreCase(fieldsenha.getText())){
+            new Perfil().setVisible(true);
+            
+            auxicon = new ImageIcon(aux);                         
+                         Inicial.Uaux.setAvatar(aux);
+             
+             Uaux = u;
+             fieldsenha.setText("");
+            }
+          }
+        
+        if(this.isVisible() == false){
+        JOptionPane.showMessageDialog(rootPane, "Erro, cliente não cadastrado, ou senha/login errados.");
+        }
+    }                                     
 
     /**
      * @param args the command line arguments

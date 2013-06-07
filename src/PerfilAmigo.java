@@ -113,6 +113,12 @@ public class PerfilAmigo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void headMouseClicked(java.awt.event.MouseEvent evt) {                                  
+        this.dispose();
+        Perfil p = new Perfil();
+        p.setVisible(true);
+    }  
     /**
      * @param args the command line arguments
      */
